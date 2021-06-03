@@ -12,7 +12,7 @@ Opsgenie API documentation can be found at https://docs.opsgenie.com/docs/
 You need an API token for communicating with tempo REST APIs. 
 
 ```
-from tempoapiclient import client
+from opsgenie import client
 
 schedulesApi = SchedulesApi(auth_token='<your_api_auth_token>)
 
