@@ -6,6 +6,13 @@ This is a Opsgenie API client library to simplify the interaction with Opsgenie.
 
 Opsgenie API documentation can be found at https://docs.opsgenie.com/docs/
 
+## Installation
+
+Install current reelase by pip
+
+```
+pip install opsgenie-python-api
+```
 
 ## Getting Started
 
