@@ -1,8 +1,9 @@
 # coding: utf-8
 
 import re
+from typing_extensions import ParamSpecArgs
 import six
-from tempoapiclient.rest_client import RestAPIClient
+from .rest_client import RestAPIClient
 
 
 class SchedulesApi(RestAPIClient):
@@ -24,7 +25,7 @@ class SchedulesApi(RestAPIClient):
         results = resp['data']
         return results
 
-# Schedules
+    # Schedules
 
     def get_schedules(self, identifier=None):
         """
@@ -35,17 +36,40 @@ class SchedulesApi(RestAPIClient):
             url += f"/{identifier}"
         return self.get(url)
 
+
+    def get_schedule_timeline(self, identifier, identifierType=None, expand=None, interval=None, intervalUnit=None, date=None):
+        """
+        Retrieves schedule timeline
+        """
+
+        params = {}
+        if identifierType:
+            params["identifierType"] = identifierType
+        if expand:
+            params["expand"] = expand
+        if interval:
+            params["interval"] = interval
+        if intervalUnit:
+            params["intervalUnit"] = intervalUnit
+        if date:
+            params["date"] = date
+
+        return self.get(f"/v2/schedules/{identifier}/timeline", params=params)
+
+
     def get_schedule_rotations(self, identifier):
         """
         Retrieves schedule rotation.
         """
         return self.get(f"/v2/schedules/{identifier}/rotations")
 
+
     def get_schedule_overrides(self, identifier):
         """
         Retrieves schedule overrides.
         """
         return self.get(f"/v2/schedules/{identifier}/overrides")
+
 
     def get_users(self, identifier=None):
         """
