@@ -16,15 +16,32 @@ pip install opsgenie-python-api
 
 ## Getting Started
 
-You need an API token for communicating with tempo REST APIs. 
+You need an API token for communicating with Opsgenie REST APIs. 
+
+### Schedules API
 
 ```
-from opsgenie import client
+from opsgenie.schedules_api import SchedulesApi
 
 schedulesApi = SchedulesApi(auth_token='<your_api_auth_token>)
 
-schedules = self.schedulesapi.get_schedules()
+users = schedulesApi.get_users()
+print(users)
+
+
+schedules = schedulesApi.get_schedules()
 print(schedules)
+
+
+rotations = schedulesApi.get_schedule_rotations("<scheduleid>")
+print(rotations)
+
+overrides = schedulesApi.get_schedule_overrides("<scheduleid>")
+print(overrides)
+
+timeline = schedulesApi.get_schedule_timeline("<scheduleid>")
+print(timeline)
+
 ```
 
 
