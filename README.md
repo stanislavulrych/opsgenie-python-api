@@ -21,19 +21,17 @@ You need an API token for communicating with Opsgenie REST APIs.
 ### Schedules API
 
 ```
-from opsgenie.schedules_api import SchedulesApi
+from opsgenie.api.v2 import Schedules
 
-schedulesApi = SchedulesApi(auth_token='<your_api_auth_token>)
+schedules = Schedules(token='<your_api_auth_token>)
 
-users = schedulesApi.get_users()
+users = schedules.get_users()
 print(users)
 
-
-schedules = schedulesApi.get_schedules()
+schedules = schedules.get_schedules()
 print(schedules)
 
-
-rotations = schedulesApi.get_schedule_rotations("<scheduleid>")
+rotations = schedules.get_schedule_rotations("<scheduleid>")
 print(rotations)
 
 overrides = schedulesApi.get_schedule_overrides("<scheduleid>")
