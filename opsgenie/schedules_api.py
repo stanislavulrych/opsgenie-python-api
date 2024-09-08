@@ -1,29 +1,23 @@
 # coding: utf-8
 
-import re
-from typing_extensions import ParamSpecArgs
-import six
-from .rest_client import RestAPIClient
+from atlassian.rest_client import AtlassianRestAPI
 
 
-class SchedulesApi(RestAPIClient):
+class SchedulesApi(AtlassianRestAPI):
     
-    
-    def __init__(self, auth_token, base_url="https://api.eu.opsgenie.com/"):
-        self._base_url = base_url
-        super().__init__(auth_token=auth_token)
-        self._update_header("Authorization", "GenieKey {}".format(auth_token))
-
-    
-    def get(self, path, data=None, flags=None, params=None, headers=None, not_json_response=None, trailing=None):
-        path_absolute = super().url_joiner(self._base_url, path)
-        resp = super().get(path_absolute, data=data, flags=flags, params=params, headers=headers, not_json_response=not_json_response, trailing=trailing)
+    def __init__(self, token, url="https://api.eu.opsgenie.com/v2/"):
+        super().__init__(url=url)
+        self._session_add_headers_genie_key(token)
         
+    def _session_add_headers_genie_key(self, token):
+        self._session.headers.update({"Authorization": "GenieKey {}".format(token)})
+
+    def get(self, path, **kwargs):
+        resp = super().get(path, **kwargs)
         if 'data' not in resp:
             return resp
 
-        results = resp['data']
-        return results
+        return resp['data']
 
     # Schedules
 
@@ -31,7 +25,8 @@ class SchedulesApi(RestAPIClient):
         """
         Retrieves existing schedules.
         """
-        url = f"/v2/schedules"
+
+        url = "/schedules"
         if identifier:
             url += f"/{identifier}"
         return self.get(url)
@@ -54,28 +49,30 @@ class SchedulesApi(RestAPIClient):
         if date:
             params["date"] = date
 
-        return self.get(f"/v2/schedules/{identifier}/timeline", params=params)
+        return self.get(f"/schedules/{identifier}/timeline", params=params)
 
 
     def get_schedule_rotations(self, identifier):
         """
         Retrieves schedule rotation.
         """
-        return self.get(f"/v2/schedules/{identifier}/rotations")
+    
+        return self.get(f"/schedules/{identifier}/rotations")
 
 
     def get_schedule_overrides(self, identifier):
         """
         Retrieves schedule overrides.
         """
-        return self.get(f"/v2/schedules/{identifier}/overrides")
+        
+        return self.get(f"/schedules/{identifier}/overrides")
 
 
     def get_users(self, identifier=None):
         """
         Retrieves users information.
         """
-        url = f"/v2/users"
+        url = "/users"
         if identifier:
             url += f"/{identifier}"
         return self.get(url)
