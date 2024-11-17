@@ -1,4 +1,4 @@
-*/__pycache__/*
+__pycache__
 dist/*
 opsgenie/opsgenie_python_api.egg-info/*
 opsgenie_python_api.egg-info/*
