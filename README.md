@@ -8,7 +8,7 @@ Opsgenie API documentation can be found at https://docs.opsgenie.com/docs/
 
 ## Installation
 
-Install current reelase by pip
+Install current release by pip
 
 ```
 pip install opsgenie-python-api
